@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTU Cyber Security Study Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+	/* Additional CSS for enhanced features */
+
+/* Dark theme toggle */
+.theme-toggle {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.theme-toggle:hover {
+    background: var(--accent-cyan);
+    color: white;
+    transform: scale(1.1);
+}
+
+/* Search functionality */
+.search-container {
+    position: relative;
+    max-width: 400px;
+    margin: 0 auto 40px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 15px 50px 15px 20px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    color: var(--text-primary);
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+    box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+}
+
+.search-icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+
+/* Highlight search results */
+.highlight {
+    background: var(--accent-orange);
+    color: black;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-weight: 600;
+}
+
+/* Interactive quiz styles */
+.quiz-container {
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px 0;
+}
+
+.quiz-question {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+}
+
+.quiz-options {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.quiz-option {
+    padding: 15px;
+    background: var(--accent-bg);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quiz-option:hover {
+    border-color: var(--accent-cyan);
+    background: rgba(6, 182, 212, 0.1);
+}
+
+.quiz-option.selected {
+    border-color: var(--accent-blue);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.quiz-option.correct {
+    border-color: var(--accent-green);
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.quiz-option.incorrect {
+    border-color: var(--accent-red);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.quiz-feedback {
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    display: none;
+}
+
+.quiz-feedback.correct {
+    background: rgba(16, 185, 129, 0.1);
+    border: 1px solid var(--accent-green);
+    color: var(--accent-green);
+}
+
+.quiz-feedback.incorrect {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid var(--accent-red);
+    color: var(--accent-red);
+}
+
+/* Timer styles */
+.timer-container {
+    position: fixed;
+    top: 150px;
+    right: 20px;
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    min-width: 150px;
+}
+
+.timer-display {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.timer-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+.timer-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.timer-btn {
+    flex: 1;
+    padding: 8px;
+    background: var(--accent-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.timer-btn:hover {
+    background: var(--accent-cyan);
+    color: white;
+}
+
+/* Notes section */
+.notes-container {
+    background: var(--secondary-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 30px;
+    margin: 20px 0;
+}
+
+.notes-textarea {
+    width: 100%;
+    min-height: 200px;
+    background: var(--accent-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+}
+
+.notes-textarea:focus {
+    outline: none;
+    border-color: var(--accent-cyan);
+}
+
+.notes-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.notes-btn {
+    padding: 10px 20px;
+    background: var(--accent-cyan);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.notes-btn:hover {
+    background: var(--accent-blue);
+    transform: translateY(-1px);
+}
+
+.notes-btn.secondary {
+    background: var(--accent-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+}
+
+.notes-btn.secondary:hover {
+    background: var(--border-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .theme-toggle,
+    .timer-container {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin: 20px auto;
+        width: fit-content;
+    }
+    
+    .search-container {
+        max-width: 100%;
+        margin: 0 20px 40px;
+    }
+    
+    .quiz-container {
+        margin: 20px;
+        padding: 20px;
+    }
+    
+    .notes-container {
+        margin: 20px;
+        padding: 20px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .nav,
+    .theme-toggle,
+    .timer-container,
+    .search-container {
+        display: none;
+    }
+    
+    body {
+        background: white;
+        color: black;
+    }
+    
+    .qa-section {
+        break-inside: avoid;
+        border: 1px solid #ccc;
+        margin-bottom: 20px;
+    }
+    
+    .qa-content {
+        max-height: none !important;
+        display: block !important;
+    }
+}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --accent-bg: #2a2a2a;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --text-muted: #707070;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --accent-orange: #f59e0b;
+            --accent-red: #ef4444;
+            --border-color: #333333;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-cyan);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 80px;
+            padding: 80px 0;
+            text-align: center;
+            background: var(--gradient-1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffffff, var(--accent-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: var(--accent-cyan);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 60px 0;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 10px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Topic Cards */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .topic-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .topic-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-3);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .topic-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);
+        }
+
+        .topic-icon {
+            font-size: 48px;
+            color: var(--accent-cyan);
+            margin-bottom: 20px;
+        }
+
+        .topic-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .topic-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .topic-questions {
+            color: var(--accent-blue);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* Question-Answer Section */
+        .qa-section {
+            background: var(--secondary-bg);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .qa-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .qa-number {
+            background: var(--accent-cyan);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .qa-question {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            flex: 1;
+        }
+
+        .qa-toggle {
+            color: var(--accent-cyan);
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .qa-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .qa-content.active {
+            max-height: 2000px;
+        }
+
+        .qa-answer {
+            padding: 20px 0 0 55px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .qa-answer p {
+            margin-bottom: 15px;
+        }
+
+        .qa-answer ul {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .qa-answer li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .qa-answer strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .qa-answer code {
+            background: var(--accent-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--accent-cyan);
+        }
+
+        /* Study Tools */
+        .study-tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .tool-card {
+            background: var(--secondary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            border-color: var(--accent-green);
+            transform: translateY(-3px);
+        }
+
+        .tool-icon {
+            font-size: 36px;
+            color: var(--accent-green);
+            margin-bottom: 15px;
+        }
+
+        .tool-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+
+        .tool-description {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--secondary-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            color: var(--text-secondary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .qa-section {
+                padding: 25px;
+            }
+
+            .qa-question {
+                font-size: 18px;
+            }
+
+            .qa-answer {
+                padding-left: 0;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scroll Progress */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--gradient-3);
+            z-index: 1001;
+            transition: width 0.1s ease;
+        }
+    </style>
+	
+	<script>
+	// Enhanced JavaScript functionality for GTU Cyber Security Study Guide
+
+class StudyGuideApp {
+    constructor() {
+        this.quizData = this.initializeQuizData();
+        this.currentQuizIndex = 0;
+        this.score = 0;
+        this.timer = null;
+        this.timeRemaining = 150; // 2.5 hours in minutes
+        this.notes = JSON.parse(localStorage.getItem('studyNotes') || '{}');
+        this.init();
+    }
+
+    init() {
+        this.setupEventListeners();
+        this.loadNotes();
+        this.initializeSearch();
+        this.createInteractiveElements();
+    }
+
+    setupEventListeners() {
+        // Theme toggle
+        const themeToggle = document.querySelector('.theme-toggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => this.toggleTheme());
+        }
+
+        // Timer controls
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('timer-btn')) {
+                const action = e.target.dataset.action;
+                this.handleTimerAction(action);
+            }
+        });
+
+        // Quiz interactions
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('quiz-option')) {
+                this.handleQuizAnswer(e.target);
+            }
+        });
+
+        // Notes functionality
+        const notesTextarea = document.querySelector('.notes-textarea');
+        if (notesTextarea) {
+            notesTextarea.addEventListener('input', () => this.saveNotes());
+        }
+
+        const notesActions = document.querySelector('.notes-actions');
+        if (notesActions) {
+            notesActions.addEventListener('click', (e) => {
+                if (e.target.classList.contains('notes-btn')) {
+                    const action = e.target.dataset.action;
+                    this.handleNotesAction(action);
+                }
+            });
+        }
+    }
+
+    initializeQuizData() {
+        return [
+            {
+                question: "Which of the following is NOT a type of firewall?",
+                options: [
+                    "Packet Filtering Firewall",
+                    "Stateful Inspection Firewall",
+                    "Application Layer Firewall",
+                    "Database Firewall"
+                ],
+                correct: 3,
+                explanation: "Database Firewall is a specific type of security control for databases, not a general firewall category."
+            },
+            {
+                question: "What is the primary purpose of using Nmap in cybersecurity?",
+                options: [
+                    "To encrypt network traffic",
+                    "To scan networks and discover hosts/services",
+                    "To create firewall rules",
+                    "To generate SSL certificates"
+                ],
+                correct: 1,
+                explanation: "Nmap is primarily used for network discovery and security auditing by scanning networks to discover hosts and services."
+            },
+            {
+                question: "Which section of IT Act, 2000 deals with identity theft?",
+                options: [
+                    "Section 43",
+                    "Section 65",
+                    "Section 66C",
+                    "Section 67"
+                ],
+                correct: 2,
+                explanation: "Section 66C of IT Act, 2000 specifically addresses identity theft and related offenses."
+            },
+            {
+                question: "What is SQL injection primarily used for by attackers?",
+                options: [
+                    "To encrypt database data",
+                    "To execute malicious SQL commands",
+                    "To improve database performance",
+                    "To backup database"
+                ],
+                correct: 1,
+                explanation: "SQL injection allows attackers to execute malicious SQL commands to access, modify, or delete database data."
+            },
+            {
+                question: "Which tool is commonly used for digital forensics analysis?",
+                options: [
+                    "Metasploit",
+                    "Autopsy",
+                    "Nmap",
+                    "Wireshark"
+                ],
+                correct: 1,
+                explanation: "Autopsy is a digital forensics platform specifically designed for analyzing hard drives and mobile devices."
+            }
+        ];
+    }
+
+    toggleTheme() {
+        const body = document.body;
+        const currentTheme = body.getAttribute('data-theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Update theme toggle icon
+        const icon = document.querySelector('.theme-toggle i');
+        if (icon) {
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+    }
+
+    initializeSearch() {
+        const searchInput = document.querySelector('.search-input');
+        if (!searchInput) return;
+
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            this.performSearch(query);
+        });
+    }
+
+    performSearch(query) {
+        const qaSections = document.querySelectorAll('.qa-section');
+        
+        qaSections.forEach(section => {
+            const question = section.querySelector('.qa-question').textContent.toLowerCase();
+            const answer = section.querySelector('.qa-answer').textContent.toLowerCase();
+            
+            if (question.includes(query) || answer.includes(query)) {
+                section.style.display = 'block';
+                if (query) {
+                    this.highlightText(section, query);
+                }
+            } else {
+                section.style.display = query ? 'none' : 'block';
+            }
+        });
+    }
+
+    highlightText(element, query) {
+        const walker = document.createTreeWalker(
+            element,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+        );
+
+        const textNodes = [];
+        let node;
+        while (node = walker.nextNode()) {
+            textNodes.push(node);
+        }
+
+        textNodes.forEach(textNode => {
+            const text = textNode.textContent;
+            const regex = new RegExp(`(${query})`, 'gi');
+            if (regex.test(text)) {
+                const highlightedText = text.replace(regex, '<span class="highlight">$1</span>');
+                const wrapper = document.createElement('span');
+                wrapper.innerHTML = highlightedText;
+                textNode.parentNode.replaceChild(wrapper, textNode);
+            }
+        });
+    }
+
+    createInteractiveElements() {
+        // Create quiz container
+        this.createQuizContainer();
+        
+        // Create notes container
+        this.createNotesContainer();
+        
+        // Create timer
+        this.createTimer();
+    }
+
+    createQuizContainer() {
+        const qaSection = document.getElementById('qa');
+        if (!qaSection) return;
+
+        const quizContainer = document.createElement('div');
+        quizContainer.className = 'quiz-container';
+        quizContainer.innerHTML = `
+            <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">
+                <i class="fas fa-question-circle"></i> Quick Quiz
+            </h3>
+            <div class="quiz-question" id="quiz-question"></div>
+            <div class="quiz-options" id="quiz-options"></div>
+            <div class="quiz-feedback" id="quiz-feedback"></div>
+            <div style="margin-top: 20px;">
+                <button class="notes-btn" onclick="studyApp.nextQuiz()">Next Question</button>
+                <span style="margin-left: 15px; color: var(--text-secondary);">
+                    Score: <span id="quiz-score">0</span>/${this.quizData.length}
+                </span>
+            </div>
+        `;
+
+        qaSection.appendChild(quizContainer);
+        this.loadQuizQuestion();
+    }
+
+    createNotesContainer() {
+        const toolsSection = document.getElementById('tools');
+        if (!toolsSection) return;
+
+        const notesContainer = document.createElement('div');
+        notesContainer.className = 'notes-container';
+        notesContainer.innerHTML = `
+            <h3 style="color: var(--accent-cyan); margin-bottom: 20px;">
+                <i class="fas fa-bookmark"></i> Personal Notes
+            </h3>
+            <textarea class="notes-textarea" placeholder="Add your personal notes here... Remember to save frequently!"></textarea>
+            <div class="notes-actions">
+                <button class="notes-btn" data-action="save">Save Notes</button>
+                <button class="notes-btn secondary" data-action="clear">Clear</button>
+                <button class="notes-btn secondary" data-action="export">Export</button>
+            </div>
+        `;
+
+        toolsSection.appendChild(notesContainer);
+    }
+
+    createTimer() {
+        const timerContainer = document.createElement('div');
+        timerContainer.className = 'timer-container';
+        timerContainer.innerHTML = `
+            <div class="timer-display" id="timer-display">02:30:00</div>
+            <div class="timer-label">Exam Time Remaining</div>
+            <div class="timer-controls">
+                <button class="timer-btn" data-action="start">Start</button>
+                <button class="timer-btn" data-action="pause">Pause</button>
+                <button class="timer-btn" data-action="reset">Reset</button>
+            </div>
+        `;
+
+        document.body.appendChild(timerContainer);
+    }
+
+    loadQuizQuestion() {
+        const question = this.quizData[this.currentQuizIndex];
+        const questionEl = document.getElementById('quiz-question');
+        const optionsEl = document.getElementById('quiz-options');
+        const feedbackEl = document.getElementById('quiz-feedback');
+
+        if (!question || !questionEl || !optionsEl || !feedbackEl) return;
+
+        questionEl.textContent = question.question;
+        optionsEl.innerHTML = '';
+        feedbackEl.style.display = 'none';
+
+        question.options.forEach((option, index) => {
+            const optionEl = document.createElement('div');
+            optionEl.className = 'quiz-option';
+            optionEl.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
+            optionEl.dataset.index = index;
+            optionsEl.appendChild(optionEl);
+        });
+    }
+
+    handleQuizAnswer(selectedOption) {
+        const question = this.quizData[this.currentQuizIndex];
+        const selectedIndex = parseInt(selectedOption.dataset.index);
+        const feedbackEl = document.getElementById('quiz-feedback');
+        const options = document.querySelectorAll('.quiz-option');
+
+        // Disable all options
+        options.forEach(option => {
+            option.style.pointerEvents = 'none';
+        });
+
+        // Mark correct/incorrect
+        options.forEach((option, index) => {
+            if (index === question.correct) {
+                option.classList.add('correct');
+            } else if (index === selectedIndex && index !== question.correct) {
+                option.classList.add('incorrect');
+            }
+        });
+
+        // Show feedback
+        feedbackEl.textContent = question.explanation;
+        feedbackEl.className = `quiz-feedback ${selectedIndex === question.correct ? 'correct' : 'incorrect'}`;
+        feedbackEl.style.display = 'block';
+
+        // Update score
+        if (selectedIndex === question.correct) {
+            this.score++;
+            document.getElementById('quiz-score').textContent = this.score;
+        }
+    }
+
+    nextQuiz() {
+        this.currentQuizIndex = (this.currentQuizIndex + 1) % this.quizData.length;
+        
+        // Reset options
+        const options = document.querySelectorAll('.quiz-option');
+        options.forEach(option => {
+            option.style.pointerEvents = 'auto';
+            option.classList.remove('correct', 'incorrect', 'selected');
+        });
+
+        this.loadQuizQuestion();
+    }
+
+    handleTimerAction(action) {
+        switch (action) {
+            case 'start':
+                this.startTimer();
+                break;
+            case 'pause':
+                this.pauseTimer();
+                break;
+            case 'reset':
+                this.resetTimer();
+                break;
+        }
+    }
+
+    startTimer() {
+        if (this.timer) return;
+
+        this.timer = setInterval(() => {
+            this.timeRemaining--;
+            this.updateTimerDisplay();
+
+            if (this.timeRemaining <= 0) {
+                this.pauseTimer();
+                alert('Time\'s up! Exam duration completed.');
+            }
+        }, 1000);
+    }
+
+    pauseTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+            this.timer = null;
+        }
+    }
+
+    resetTimer() {
+        this.pauseTimer();
+        this.timeRemaining = 150; // Reset to 2.5 hours
+        this.updateTimerDisplay();
+    }
+
+    updateTimerDisplay() {
+        const hours = Math.floor(this.timeRemaining / 3600);
+        const minutes = Math.floor((this.timeRemaining % 3600) / 60);
+        const seconds = this.timeRemaining % 60;
+
+        const display = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        const timerDisplay = document.getElementById('timer-display');
+        if (timerDisplay) {
+            timerDisplay.textContent = display;
+        }
+    }
+
+    handleNotesAction(action) {
+        const textarea = document.querySelector('.notes-textarea');
+        if (!textarea) return;
+
+        switch (action) {
+            case 'save':
+                this.saveNotes();
+                break;
+            case 'clear':
+                if (confirm('Are you sure you want to clear all notes?')) {
+                    textarea.value = '';
+                    this.saveNotes();
+                }
+                break;
+            case 'export':
+                this.exportNotes();
+                break;
+        }
+    }
+
+    saveNotes() {
+        const textarea = document.querySelector('.notes-textarea');
+        if (!textarea) return;
+
+        const notes = textarea.value;
+        localStorage.setItem('studyNotes', JSON.stringify({
+            content: notes,
+            timestamp: new Date().toISOString()
+        }));
+
+        // Show save confirmation
+        this.showNotification('Notes saved successfully!', 'success');
+    }
+
+    loadNotes() {
+        const savedNotes = localStorage.getItem('studyNotes');
+        if (savedNotes) {
+            const notesData = JSON.parse(savedNotes);
+            const textarea = document.querySelector('.notes-textarea');
+            if (textarea && notesData.content) {
+                textarea.value = notesData.content;
+            }
+        }
+    }
+
+    exportNotes() {
+        const textarea = document.querySelector('.notes-textarea');
+        if (!textarea || !textarea.value.trim()) {
+            this.showNotification('No notes to export!', 'warning');
+            return;
+        }
+
+        const notesContent = textarea.value;
+        const blob = new Blob([notesContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `GTU-CyberSecurity-Notes-${new Date().toISOString().split('T')[0]}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        this.showNotification('Notes exported successfully!', 'success');
+    }
+
+    showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? 'var(--accent-green)' : type === 'warning' ? 'var(--accent-orange)' : 'var(--accent-blue)'};
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            z-index: 10000;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        `;
+        notification.textContent = message;
+
+        document.body.appendChild(notification);
+
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+
+    // Utility functions for subnet calculator
+    calculateSubnet(ip, subnetMask) {
+        const ipParts = ip.split('.').map(Number);
+        const maskParts = subnetMask.split('.').map(Number);
+        
+        const networkAddress = ipParts.map((part, i) => part & maskParts[i]);
+        const broadcastAddress = ipParts.map((part, i) => part | (255 - maskParts[i]));
+        
+        const hostCount = Math.pow(2, 32 - this.getCIDR(subnetMask)) - 2;
+        
+        return {
+            network: networkAddress.join('.'),
+            broadcast: broadcastAddress.join('.'),
+            hosts: hostCount,
+            range: `${networkAddress.join('.')} - ${broadcastAddress.join('.')}`
+        };
+    }
+
+    getCIDR(subnetMask) {
+        const maskParts = subnetMask.split('.').map(Number);
+        let binaryMask = '';
+        
+        maskParts.forEach(part => {
+            binaryMask += part.toString(2).padStart(8, '0');
+        });
+        
+        return binaryMask.split('1').length - 1;
+    }
+}
+
+// Initialize the application
+let studyApp;
+
+document.addEventListener('DOMContentLoaded', () => {
+    studyApp = new StudyGuideApp();
+    
+    // Add keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+        // Ctrl/Cmd + F to focus search
+        if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
+            e.preventDefault();
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput) searchInput.focus();
+        }
+        
+        // Ctrl/Cmd + S to save notes
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+            e.preventDefault();
+            studyApp.saveNotes();
+        }
+        
+        // Escape to clear search
+        if (e.key === 'Escape') {
+            const searchInput = document.querySelector('.search-input');
+            if (searchInput && searchInput.value) {
+                searchInput.value = '';
+                studyApp.performSearch('');
+            }
+        }
+    });
+    
+    // Add smooth scrolling for better UX
+    document.documentElement.style.scrollBehavior = 'smooth';
+    
+    // Initialize search functionality if not already present
+    if (!document.querySelector('.search-container')) {
+        const searchContainer = document.createElement('div');
+        searchContainer.className = 'search-container';
+        searchContainer.innerHTML = `
+            <input type="text" class="search-input" placeholder="Search questions and answers...">
+            <i class="fas fa-search search-icon"></i>
+        `;
+        
+        const qaSection = document.querySelector('#qa .section-header');
+        if (qaSection) {
+            qaSection.parentNode.insertBefore(searchContainer, qaSection.nextSibling);
+            studyApp.initializeSearch();
+        }
+    }
+});
+
+// Export for global access
+window.studyApp = studyApp;
+	</script>
+<base target="_blank">
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <nav class="nav">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">
+                    <i class="fas fa-shield-alt"></i> GTU Cyber Security
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#topics">Topics</a></li>
+                    <li><a href="#qa">Q&A</a></li>
+                    <li><a href="#tools">Tools</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content fade-in-up">
+                <h1>GTU Cyber Security Study Guide</h1>
+                <p>Comprehensive preparation material for Gujarat Technological University Cyber Security examinations with detailed explanations and practical examples.</p>
+                <a href="#topics" class="cta-button">Start Learning</a>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="section" id="topics">
+                <div class="section-header">
+                    <h2 class="section-title">Core Topics</h2>
+                    <p class="section-subtitle">Essential cyber security concepts covered in GTU syllabus with detailed explanations</p>
+                </div>
+
+                <div class="topics-grid">
+                    <div class="topic-card" onclick="scrollToSection('network-security')">
+                        <div class="topic-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h3 class="topic-title">Network Security</h3>
+                        <p class="topic-description">Firewalls, IDS/IPS, NAT, Network sniffers, and wireless security concepts explained with practical examples.</p>
+                        <div class="topic-questions">15+ Questions Covered</div>
+                    </div>
+
+                    <div class="topic-card" onclick="scrollToSection('ethical-hacking')">
+                        <div class="topic-icon">
+                            <i class="fas fa-user-secret"></i>
+                        </div>
+                        <h3 class="topic-title">Ethical Hacking Tools</h3>
+                        <p class="topic-description">Nmap, Metasploit, OpenVAS, Wireshark, and other penetration testing tools with hands-on examples.</p>
+                        <div class="topic-questions">12+ Questions Covered</div>
+                    </div>
+
+                    <div class="topic-card" onclick="scrollToSection('cyber-crimes')">
+                        <div class="topic-icon">
+                            <i class="fas fa-gavel"></i>
+                        </div>
+                        <h3 class="topic-title">Cyber Crimes & Laws</h3>
+                        <p class="topic-description">Types of cyber crimes, IT Act 2000, digital forensics, and incident response procedures.</p>
+                        <div class="topic-questions">10+ Questions Covered</div>
+                    </div>
+
+                    <div class="topic-card" onclick="scrollToSection('web-security')">
+                        <div class="topic-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <h3 class="topic-title">Web Security</h3>
+                        <p class="topic-description">SQL injection, XSS, buffer overflow, steganography, and web application vulnerabilities.</p>
+                        <div class="topic-questions">8+ Questions Covered</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="qa">
+                <div class="section-header">
+                    <h2 class="section-title">GTU Question Bank</h2>
+                    <p class="section-subtitle">Previous exam questions with detailed answers following GTU pattern</p>
+                </div>
+
+                <!-- Network Security Q&A -->
+                <div id="network-security">
+                    <div class="qa-section">
+                        <div class="qa-header" onclick="toggleQA(this)">
+                            <div class="qa-number">Q1</div>
+                            <div class="qa-question">Define System and Web Vulnerability. Explain different types of vulnerabilities.</div>
+                            <div class="qa-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="qa-content">
+                            <div class="qa-answer">
+                                <p><strong>System Vulnerability:</strong> A weakness or flaw in a computer system's design, implementation, or operation that could be exploited to violate the system's security policy.</p>
+                                <p><strong>Web Vulnerability:</strong> A security weakness in web applications, web servers, or web browsers that can be exploited by attackers to gain unauthorized access or perform malicious actions.</p>
+                                
+                                <p><strong>Types of Vulnerabilities:</strong></p>
+                                <ul>
+                                    <li><strong>Input Validation Flaws:</strong> SQL injection, XSS, command injection</li>
+                                    <li><strong>Authentication Weaknesses:</strong> Weak passwords, session management issues</li>
+                                    <li><strong>Authorization Failures:</strong> Privilege escalation, access control issues</li>
+                                    <li><strong>Configuration Errors:</strong> Default settings, unnecessary services</li>
+                                    <li><strong>Buffer Overflows:</strong> Memory corruption vulnerabilities</li>
+                                    <li><strong>Information Disclosure:</strong> Exposing sensitive data or system information</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-section">
+                        <div class="qa-header" onclick="toggleQA(this)">
+                            <div class="qa-number">Q2</div>
+                            <div class="qa-question">Explain Nmap and its different functionalities with commands.</div>
+                            <div class="qa-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="qa-content">
+                            <div class="qa-answer">
+                                <p><strong>Nmap (Network Mapper)</strong> is a free and open-source network scanning tool used for network discovery, security auditing, and port scanning.</p>
+                                
+                                <p><strong>Key Functionalities:</strong></p>
+                                <ul>
+                                    <li><strong>Host Discovery:</strong> Finding live hosts on a network</li>
+                                    <li><strong>Port Scanning:</strong> Identifying open ports and services</li>
+                                    <li><strong>Service Version Detection:</strong> Determining service versions</li>
+                                    <li><strong>OS Detection:</strong> Identifying operating systems</li>
+                                    <li><strong>Scriptable Interaction:</strong> Using NSE (Nmap Scripting Engine)</li>
+                                </ul>
+
+                                <p><strong>Common Nmap Commands:</strong></p>
+                                <ul>
+                                    <li><code>nmap -sP 192.168.1.0/24</code> - Ping scan to find live hosts</li>
+                                    <li><code>nmap -sS 192.168.1.1</code> - SYN scan (stealth scan)</li>
+                                    <li><code>nmap -sT 192.168.1.1</code> - TCP connect scan</li>
+                                    <li><code>nmap -sU 192.168.1.1</code> - UDP port scan</li>
+                                    <li><code>nmap -sV 192.168.1.1</code> - Service version detection</li>
+                                    <li><code>nmap -O 192.168.1.1</code> - OS detection</li>
+                                    <li><code>nmap -A 192.168.1.1</code> - Aggressive scan (all features)</li>
+                                    <li><code>nmap -p 1-65535 192.168.1.1</code> - Scan all ports</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-section">
+                        <div class="qa-header" onclick="toggleQA(this)">
+                            <div class="qa-number">Q3</div>
+                            <div class="qa-question">Differentiate between Stateful and Stateless firewalls.</div>
+                            <div class="qa-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="qa-content">
+                            <div class="qa-answer">
+                                <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                                    <tr style="background: var(--accent-bg);">
+                                        <th style="padding: 15px; border: 1px solid var(--border-color); text-align: left;">Aspect</th>
+                                        <th style="padding: 15px; border: 1px solid var(--border-color); text-align: left;">Stateful Firewall</th>
+                                        <th style="padding: 15px; border: 1px solid var(--border-color); text-align: left;">Stateless Firewall</th>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);"><strong>Connection Tracking</strong></td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">Tracks connection state and context</td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">No connection tracking</td>
+                                    </tr>
+                                    <tr style="background: var(--accent-bg);">
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);"><strong>Decision Basis</strong></td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">Packet + connection state</td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">Individual packet only</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);"><strong>Performance</strong></td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">Slower due to state tracking</td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">Faster, less resource intensive</td>
+                                    </tr>
+                                    <tr style="background: var(--accent-bg);">
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);"><strong>Security Level</strong></td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">Higher security</td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">Basic security</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);"><strong>Configuration</strong></td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">More complex</td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">Simple rule-based</td>
+                                    </tr>
+                                    <tr style="background: var(--accent-bg);">
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);"><strong>Examples</strong></td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">Cisco ASA, pfSense</td>
+                                        <td style="padding: 15px; border: 1px solid var(--border-color);">Basic ACLs, iptables</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ethical Hacking Tools Q&A -->
+                <div id="ethical-hacking">
+                    <div class="qa-section">
+                        <div class="qa-header" onclick="toggleQA(this)">
+                            <div class="qa-number">Q4</div>
+                            <div class="qa-question">Explain Metasploit Framework and its components.</div>
+                            <div class="qa-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="qa-content">
+                            <div class="qa-answer">
+                                <p><strong>Metasploit Framework</strong> is an open-source penetration testing framework that provides tools for developing and executing exploit code against remote target machines.</p>
+
+                                <p><strong>Key Components:</strong></p>
+                                <ul>
+                                    <li><strong>msfconsole:</strong> Main command-line interface for Metasploit</li>
+                                    <li><strong>Exploits:</strong> Code that takes advantage of vulnerabilities</li>
+                                    <li><strong>Payloads:</strong> Code that runs on target system after exploitation</li>
+                                    <li><strong>Auxiliary:</strong> Modules for scanning, fuzzing, and other non-exploitation tasks</li>
+                                    <li><strong>Encoders:</strong> Encode payloads to avoid detection</li>
+                                    <li><strong>Nops:</strong> No-operation generators for payload alignment</li>
+                                    <li><strong>Post-exploitation:</strong> Modules for maintaining access and gathering information</li>
+                                </ul>
+
+                                <p><strong>Basic Metasploit Workflow:</strong></p>
+                                <ol>
+                                    <li>Launch Metasploit: <code>msfconsole</code></li>
+                                    <li>Search for exploit: <code>search exploit_name</code></li>
+                                    <li>Use exploit: <code>use exploit/path</code></li>
+                                    <li>Set target options: <code>set RHOST target_ip</code></li>
+                                    <li>Set payload: <code>set PAYLOAD payload_name</code></li>
+                                    <li>Execute: <code>exploit</code> or <code>run</code></li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-section">
+                        <div class="qa-header" onclick="toggleQA(this)">
+                            <div class="qa-number">Q5</div>
+                            <div class="qa-question">What is SQL Injection? Explain with example and prevention methods.</div>
+                            <div class="qa-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="qa-content">
+                            <div class="qa-answer">
+                                <p><strong>SQL Injection</strong> is a code injection technique that exploits security vulnerabilities in a web application's database layer by manipulating SQL queries.</p>
+
+                                <p><strong>How SQL Injection Works:</strong></p>
+                                <ul>
+                                    <li>Attacker inputs malicious SQL code through user input fields</li>
+                                    <li>The application constructs SQL queries using this input</li>
+                                    <li>Malicious SQL gets executed on the database</li>
+                                    <li>Attacker can read, modify, or delete database data</li>
+                                </ul>
+
+                                <p><strong>Example of SQL Injection:</strong></p>
+                                <p>Vulnerable Code:</p>
+                                <code>SELECT * FROM users WHERE username = '$username' AND password = '$password'</code>
+                                
+                                <p>Malicious Input:</p>
+                                <ul>
+                                    <li>Username: <code>admin'--</code></li>
+                                    <li>Password: <code>anything</code></li>
+                                </ul>
+
+                                <p><strong>Resulting Query:</strong></p>
+                                <code>SELECT * FROM users WHERE username = 'admin'--' AND password = 'anything'</code>
+                                <p>The <code>--</code> comments out the password check, allowing unauthorized access.</p>
+
+                                <p><strong>Prevention Methods:</strong></p>
+                                <ul>
+                                    <li><strong>Parameterized Queries:</strong> Use prepared statements with bound parameters</li>
+                                    <li><strong>Input Validation:</strong> Validate and sanitize all user inputs</li>
+                                    <li><strong>Stored Procedures:</strong> Use database stored procedures</li>
+                                    <li><strong>Least Privilege:</strong> Give database users minimal required permissions</li>
+                                    <li><strong>Web Application Firewall (WAF):</strong> Filter malicious requests</li>
+                                    <li><strong>Regular Security Testing:</strong> Conduct penetration testing and code reviews</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cyber Crimes & Laws Q&A -->
+                <div id="cyber-crimes">
+                    <div class="qa-section">
+                        <div class="qa-header" onclick="toggleQA(this)">
+                            <div class="qa-number">Q6</div>
+                            <div class="qa-question">Define Digital Forensics and explain its phases.</div>
+                            <div class="qa-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="qa-content">
+                            <div class="qa-answer">
+                                <p><strong>Digital Forensics</strong> is the process of identifying, preserving, analyzing, and presenting digital evidence in a legally admissible manner for use in legal proceedings.</p>
+
+                                <p><strong>Key Objectives:</strong></p>
+                                <ul>
+                                    <li>Preserve evidence in its original state</li>
+                                    <li>Reconstruct digital events and timelines</li>
+                                    <li>Identify responsible parties</li>
+                                    <li>Support legal proceedings with technical evidence</li>
+                                </ul>
+
+                                <p><strong>Phases of Digital Forensics:</strong></p>
+                                <ol>
+                                    <li><strong>Identification:</strong> Recognizing potential sources of digital evidence</li>
+                                    <li><strong>Preservation:</strong> Isolating and securing digital evidence to prevent alteration</li>
+                                    <li><strong>Collection:</strong> Acquiring digital evidence using proper forensic procedures</li>
+                                    <li><strong>Examination:</strong> Processing collected data to identify relevant information</li>
+                                    <li><strong>Analysis:</strong> Interpreting examined data to draw conclusions</li>
+                                    <li><strong>Presentation:</strong> Reporting findings in clear, understandable format</li>
+                                    <li><strong>Decision:</strong> Using forensic results for legal or administrative action</li>
+                                </ol>
+
+                                <p><strong>Common Digital Forensics Tools:</strong></p>
+                                <ul>
+                                    <li><strong>Autopsy:</strong> Digital forensics platform for hard drive investigation</li>
+                                    <li><strong>Sleuth Kit:</strong> Collection of command-line forensics tools</li>
+                                    <li><strong>FTK Imager:</strong> Tool for creating forensic images</li>
+                                    <li><strong>Wireshark:</strong> Network protocol analyzer</li>
+                                    <li><strong>Volatility:</strong> Memory forensics framework</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qa-section">
+                        <div class="qa-header" onclick="toggleQA(this)">
+                            <div class="qa-number">Q7</div>
+                            <div class="qa-question">Explain IT Act, 2000 and its important sections.</div>
+                            <div class="qa-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="qa-content">
+                            <div class="qa-answer">
+                                <p><strong>Information Technology Act, 2000 (IT Act, 2000)</strong> is the primary law in India dealing with cybercrime and electronic commerce. It provides legal recognition to electronic transactions and digital signatures.</p>
+
+                                <p><strong>Key Objectives:</strong></p>
+                                <ul>
+                                    <li>Legal recognition of electronic transactions</li>
+                                    <li>Facilitation of electronic filing with government agencies</li>
+                                    <li>Amendment of Indian Penal Code for digital crimes</li>
+                                    <li>Protection of online privacy and data</li>
+                                    <li>Establishment of cyber appellate tribunal</li>
+                                </ul>
+
+                                <p><strong>Important Sections of IT Act, 2000:</strong></p>
+                                
+                                <p><strong>Section 43 - Penalty for Damage to Computer System:</strong></p>
+                                <ul>
+                                    <li>Compensation up to ₹1 crore for unauthorized access</li>
+                                    <li>Covers data theft, introducing viruses, damaging systems</li>
+                                </ul>
+
+                                <p><strong>Section 65 - Tampering with Computer Source Documents:</strong></p>
+                                <ul>
+                                    <li>Punishment: Up to 3 years imprisonment or ₹2 lakh fine</li>
+                                    <li>Concealing, destroying, or altering source code</li>
+                                </ul>
+
+                                <p><strong>Section 66 - Computer Related Offenses:</strong></p>
+                                <ul>
+                                    <li>Punishment: Up to 3 years imprisonment or ₹5 lakh fine</li>
+                                    <li>Dishonestly or fraudulently doing any act referred to in section 43</li>
+                                </ul>
+
+                                <p><strong>Section 66C - Identity Theft:</strong></p>
+                                <ul>
+                                    <li>Punishment: Up to 3 years imprisonment and/or fine up to ₹1 lakh</li>
+                                    <li>Fraudulently using electronic signature, password, or unique identification</li>
+                                </ul>
+
+                                <p><strong>Section 66D - Cheating by Personation:</strong></p>
+                                <ul>
+                                    <li>Punishment: Up to 3 years imprisonment and/or fine up to ₹1 lakh</li>
+                                    <li>Cheating by pretending to be someone else using computer resources</li>
+                                </ul>
+
+                                <p><strong>Section 66E - Privacy Violation:</strong></p>
+                                <ul>
+                                    <li>Punishment: Up to 3 years imprisonment and/or fine up to ₹2 lakh</li>
+                                    <li>Capturing, publishing, or transmitting private images without consent</li>
+                                </ul>
+
+                                <p><strong>Section 67 - Publishing Obscene Information:</strong></p>
+                                <ul>
+                                    <li>Punishment: Up to 3 years imprisonment and/or fine up to ₹5 lakh</li>
+                                    <li>Publishing or transmitting obscene material in electronic form</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Web Security Q&A -->
+                <div id="web-security">
+                    <div class="qa-section">
+                        <div class="qa-header" onclick="toggleQA(this)">
+                            <div class="qa-number">Q8</div>
+                            <div class="qa-question">Explain Buffer Overflow attack with prevention techniques.</div>
+                            <div class="qa-toggle"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="qa-content">
+                            <div class="qa-answer">
+                                <p><strong>Buffer Overflow</strong> is a software vulnerability that occurs when a program tries to store more data in a buffer than it can hold, causing the excess data to overflow into adjacent memory locations.</p>
+
+                                <p><strong>How Buffer Overflow Works:</strong></p>
+                                <ol>
+                                    <li>Program allocates fixed-size buffer in memory</li>
+                                    <li>Attacker provides input larger than buffer capacity</li>
+                                    <li>Excess data overwrites adjacent memory</li>
+                                    <li>Can overwrite return address, function pointers, or critical data</li>
+                                    <li>Attacker can execute arbitrary code or crash the system</li>
+                                </ol>
+
+                                <p><strong>Types of Buffer Overflow:</strong></p>
+                                <ul>
+                                    <li><strong>Stack Overflow:</strong> Overwriting stack memory</li>
+                                    <li><strong>Heap Overflow:</strong> Overwriting heap memory</li>
+                                    <li><strong>Format String Attack:</strong> Exploiting format string functions</li>
+                                    <li><strong>Integer Overflow:</strong> Arithmetic operations causing overflow</li>
+                                </ul>
+
+                                <p><strong>Prevention Techniques:</strong></p>
+                                <ul>
+                                    <li><strong>Input Validation:</strong> Check input length before copying to buffers</li>
+                                    <li><strong>Safe Functions:</strong> Use <code>strncpy()</code> instead of <code>strcpy()</code></li>
+                                    <li><strong>Stack Canaries:</strong> Place special values between buffer and return address</li>
+                                    <li><strong>ASLR (Address Space Layout Randomization):</strong> Randomize memory layout</li>
+                                    <li><strong>Data Execution Prevention (DEP):</strong> Mark memory regions as non-executable</li>
+                                    <li><strong>Compiler Protections:</strong> Use stack protection mechanisms</li>
+                                    <li><strong>Regular Code Reviews:</strong> Identify and fix vulnerable code</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="tools">
+                <div class="section-header">
+                    <h2 class="section-title">Study Tools</h2>
+                    <p class="section-subtitle">Interactive tools to enhance your learning experience</p>
+                </div>
+
+                <div class="study-tools">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-calculator"></i>
+                        </div>
+                        <h3 class="tool-title">Subnet Calculator</h3>
+                        <p class="tool-description">Calculate network subnets, IP ranges, and broadcast addresses for network security questions.</p>
+                    </div>
+
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="tool-title">Exam Timer</h3>
+                        <p class="tool-description">Practice time management with GTU exam pattern timing (2.5 hours with proper section allocation).</p>
+                    </div>
+
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <h3 class="tool-title">Quiz Generator</h3>
+                        <p class="tool-description">Generate random questions from different topics to test your knowledge and preparation level.</p>
+                    </div>
+
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-bookmark"></i>
+                        </div>
+                        <h3 class="tool-title">Quick Notes</h3>
+                        <p class="tool-description">Save important points and create personalized study notes for quick revision before exams.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 GTU Cyber Security Study Guide. Designed for educational purposes.</p>
+                <p>Follow GTU examination pattern and guidelines for best results.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle Q&A sections
+        function toggleQA(header) {
+            const content = header.nextElementSibling;
+            const toggle = header.querySelector('.qa-toggle i');
+            
+            content.classList.toggle('active');
+            
+            if (content.classList.contains('active')) {
+                toggle.classList.remove('fa-chevron-down');
+                toggle.classList.add('fa-chevron-up');
+            } else {
+                toggle.classList.remove('fa-chevron-up');
+                toggle.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Scroll to section
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Add fade-in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.topic-card, .qa-section').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Auto-expand first Q&A on page load
+        window.addEventListener('load', () => {
+            const firstQA = document.querySelector('.qa-header');
+            if (firstQA) {
+                toggleQA(firstQA);
+            }
+        });
+    </script>
+</body>
+</html>
